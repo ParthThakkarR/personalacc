@@ -1,10 +1,12 @@
 'use strict';
 /**
  * Proper login system (clean-room, mirrors researched flow W2/W3):
- *  PASSWORD MODE (active, AUTH_MODE=password, zero SMS cost):
+ * PASSWORD MODE (active, AUTH_MODE=password, zero SMS cost):
  *  register (phone+password, first device) → login (phone+password, any
  *  device; same number sees same books = account-based sync) →
  *  {access, refresh, user, is_new} → profile onboarding → PIN/AppLock.
+ * CLOSED VAULT: when ALLOWED_PHONES is set, register/login accept ONLY
+ *  listed phones (admin-added users). Production refuses to start without it.
  *  OTP MODE (parked, see seam below): re-enable when an SMS provider is
  *  funded; utils/otp.js is untouched and tests keep a parked OTP block.
  * Refresh rotation with reuse detection; PIN with fail-counter + lockout.
@@ -15,6 +17,7 @@ const crypto = require('node:crypto');
 const { z } = require('zod');
 const { openDb, migrate } = require('../db');
 const { signAccess, newRefreshToken, refreshExpiry } = require('../utils/jwt');
+const { isPhoneAllowed } = require('../utils/allowlist');
 // OTP/SMS seam (PARKED — preserved intact for later, do not delete):
 // re-enable by uncommenting the import + route block below when an SMS
 // provider (Firebase Phone Auth / MSG91 / Truecaller) is funded.
@@ -91,6 +94,11 @@ function newReferralCode() {
 // same number + password to sync the same books (account-based sync).
 router.post('/register', validate(passwordSchema), (req, res) => {
   const { phone, password } = req.body;
+  // Closed vault: only admin-listed phones may create an account, ever.
+  // Checked BEFORE the existing-user lookup so outsiders learn nothing.
+  if (!isPhoneAllowed(phone)) {
+    return res.status(403).json({ error: 'not_invited' });
+  }
   const existing = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone);
   if (existing) {
     return res.status(409).json({ error: 'user_exists' });
@@ -107,6 +115,11 @@ router.post('/register', validate(passwordSchema), (req, res) => {
 // Any device: same number + password → same account, same books.
 router.post('/login', validate(passwordSchema), (req, res) => {
   const { phone, password } = req.body;
+  // Closed vault: unlisted phones get the GENERIC error on purpose — the
+  // response must not reveal whether a number is allow-listed or registered.
+  if (!isPhoneAllowed(phone)) {
+    return res.status(401).json({ error: 'invalid_credentials' });
+  }
   const user = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone);
   // Generic error on purpose: do not reveal whether the number is registered.
   if (!user || !user.password_hash || !bcrypt.compareSync(password, user.password_hash)) {

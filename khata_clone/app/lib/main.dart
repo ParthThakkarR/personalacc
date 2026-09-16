@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'core/api_client.dart';
 import 'core/lang.dart';
 import 'core/state.dart';
+import 'features/vault/calculator_screen.dart';
+import 'features/vault/vault_state.dart';
 import 'features/auth/phone_screen.dart';
 import 'features/auth/language_screen.dart';
 // OTP seam (PARKED): re-enable with AuthStage.otp case below + AuthState OTP
@@ -21,6 +23,7 @@ void main() {
     MultiProvider(
       providers: [
         Provider<ApiClient>.value(value: api),
+        ChangeNotifierProvider(create: (_) => VaultState()),
         ChangeNotifierProvider(create: (_) => AuthState(api)..init()),
         ChangeNotifierProvider(create: (_) => KhataState(api)),
         ChangeNotifierProvider(create: (_) => BookState(api)),
@@ -43,14 +46,56 @@ class KhataApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Khata Clone (College Project)',
+      // Disguise name: launcher, recents screen and task switcher all show
+      // "Calculator". The real app only appears after the vault code.
+      title: 'Calculator',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B6B3A)),
         useMaterial3: true,
       ),
-      home: const AuthGuard(),
+      home: const VaultShield(),
     );
+  }
+}
+
+/// Vault gate: cold start always shows the disguise calculator. Only the
+/// secret code (typed + `=`) reveals the real app, for this process only.
+/// If the session ends while unlocked (logout / token expiry), the disguise
+/// snaps back on immediately so a logged-out phone never shows login UI.
+class VaultShield extends StatefulWidget {
+  const VaultShield({super.key});
+
+  @override
+  State<VaultShield> createState() => _VaultShieldState();
+}
+
+class _VaultShieldState extends State<VaultShield> {
+  AuthStage? _lastStage;
+
+  static const _authedStages = {
+    AuthStage.profile,
+    AuthStage.pinSetup,
+    AuthStage.pinUnlock,
+    AuthStage.home,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final vault = context.watch<VaultState>();
+    final stage = context.watch<AuthState>().stage;
+    final wasAuthed = _lastStage != null && _authedStages.contains(_lastStage);
+    final loggedOut =
+        stage == AuthStage.phone || stage == AuthStage.password;
+    _lastStage = stage;
+    if (!vault.unlocked) return const CalculatorScreen();
+    if (wasAuthed && loggedOut) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) context.read<VaultState>().lock();
+      });
+      return const CalculatorScreen();
+    }
+    return const AuthGuard();
   }
 }
 

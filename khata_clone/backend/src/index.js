@@ -53,9 +53,27 @@ app.use('/business', require('./routes/business'));
 app.use(errorHandler);
 
 const PORT = Number(process.env.PORT || 8080);
-if (process.env.NODE_ENV === 'production' && (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32)) {
-  console.error('Refusing to start: set a strong JWT_SECRET (>=32 chars) in production.');
-  process.exit(1);
+// Closed-vault production guards: refuse to start a PUBLIC server unless it
+// is locked down — strong secrets, no demo seed (known password), and a
+// non-empty admin allow-list so no outsider can ever register or log in.
+if (process.env.NODE_ENV === 'production') {
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+    console.error('Refusing to start: set a strong JWT_SECRET (>=32 chars) in production.');
+    process.exit(1);
+  }
+  if (!process.env.CIPHER_KEY || process.env.CIPHER_KEY.length < 32) {
+    console.error('Refusing to start: set a strong CIPHER_KEY (>=32 chars, distinct from JWT_SECRET) in production.');
+    process.exit(1);
+  }
+  if (process.env.SEED_DEMO !== '0') {
+    console.error('Refusing to start: SEED_DEMO must be "0" in production (demo account has a known password).');
+    process.exit(1);
+  }
+  const { allowedPhones } = require('./utils/allowlist');
+  if (allowedPhones().length === 0) {
+    console.error('Refusing to start: set ALLOWED_PHONES (comma-separated 10-digit numbers) in production — closed vault.');
+    process.exit(1);
+  }
 }
 if (require.main === module) {
   app.listen(PORT, () => console.log(`khata-clone backend on http://localhost:${PORT}`));

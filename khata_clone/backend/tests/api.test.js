@@ -496,6 +496,32 @@ async function main() {
     assert.equal(dumpB.bill_items.length, dumpA.bill_items.length);
     console.log('PASS export-import verbatim roundtrip');
 
+    // --- closed vault: ALLOWED_PHONES allow-list ---
+    process.env.ALLOWED_PHONES = '9810000009,9810000010';
+    // outsider cannot register
+    r = await rq('/auth/register', { method: 'POST', body: JSON.stringify({ phone: '9810000099', password: 'outsider123' }) });
+    assert.equal(r.status, 403);
+    assert.equal((await r.json()).error, 'not_invited');
+    console.log('PASS unlisted register rejected');
+    // outsider login gets the generic error (no allow-list membership leak)
+    r = await rq('/auth/login', { method: 'POST', body: JSON.stringify({ phone: '9810000099', password: 'outsider123' }) });
+    assert.equal(r.status, 401);
+    assert.equal((await r.json()).error, 'invalid_credentials');
+    console.log('PASS unlisted login generic 401');
+    // even a PRE-EXISTING account is locked out while unlisted (fail closed)
+    r = await rq('/auth/login', { method: 'POST', body: JSON.stringify({ phone: '9876543210', password: 'testpass123' }) });
+    assert.equal(r.status, 401);
+    assert.equal((await r.json()).error, 'invalid_credentials');
+    console.log('PASS pre-existing account locked out while unlisted');
+    // listed phone registers + logs in normally
+    r = await rq('/auth/register', { method: 'POST', body: JSON.stringify({ phone: '9810000009', password: 'vaultpass1' }) });
+    assert.equal(r.status, 201);
+    console.log('PASS listed register allowed');
+    r = await rq('/auth/login', { method: 'POST', body: JSON.stringify({ phone: '9810000009', password: 'vaultpass1' }) });
+    assert.equal(r.status, 200);
+    console.log('PASS listed login allowed');
+    delete process.env.ALLOWED_PHONES;
+
     console.log('ALL TESTS PASSED');
   } finally {
     server.close();

@@ -1,8 +1,9 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
-/// Token store seam. SharedPreferences keeps the college demo dependency-free;
-/// swap [PrefsAuthStorage] for a flutter_secure_storage implementation before
-/// any production use (keys stay the same shape: access + refresh).
+/// Session store seam.
+///
+/// MAX-SECURITY MODE: sessions live in RAM only ([MemoryAuthStorage]).
+/// Nothing secret is ever written to the phone's disk, so killing the app
+/// always means logged out — the next cold start requires the vault code +
+/// phone/password (+ PIN) again. There is deliberately no "remember me".
 abstract class AuthStorage {
   Future<StoredSession> read();
   Future<void> write({required String access, required String refresh});
@@ -15,27 +16,26 @@ class StoredSession {
   final String? refresh;
 }
 
-class PrefsAuthStorage implements AuthStorage {
+/// RAM-only store. A fresh instance reads empty, which is exactly what a new
+/// app process gets — this is what makes "close app = logged out" certain
+/// rather than best-effort (no lifecycle callbacks to miss, no files to wipe,
+// no forensic residue of tokens on disk).
+class MemoryAuthStorage implements AuthStorage {
+  String? _access;
+  String? _refresh;
+
   @override
-  Future<StoredSession> read() async {
-    final prefs = await SharedPreferences.getInstance();
-    return StoredSession(
-      prefs.getString('khata_access'),
-      prefs.getString('khata_refresh'),
-    );
-  }
+  Future<StoredSession> read() async => StoredSession(_access, _refresh);
 
   @override
   Future<void> write({required String access, required String refresh}) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('khata_access', access);
-    await prefs.setString('khata_refresh', refresh);
+    _access = access;
+    _refresh = refresh;
   }
 
   @override
   Future<void> clear() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('khata_access');
-    await prefs.remove('khata_refresh');
+    _access = null;
+    _refresh = null;
   }
 }

@@ -19,6 +19,11 @@ services:
         value: "0"
       - key: AUTH_MODE
         value: password
+      # CLOSED VAULT: comma-separated 10-digit phones of the ONLY people who
+      # may register/log in. Fill this in the Render dashboard AFTER first
+      # deploy — the server FAILS CLOSED (won't start) while it is empty.
+      - key: ALLOWED_PHONES
+        value: ""
       - key: ALLOWED_ORIGINS
         value: ""
       - key: DB_PATH

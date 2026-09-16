@@ -10,13 +10,15 @@ import 'auth_storage.dart';
 /// in-flight refresh; concurrent 401s wait for it instead of stampeding.
 class ApiClient {
   ApiClient({String? baseUrl, AuthStorage? storage})
-    : baseUrl =
-          baseUrl ??
-          const String.fromEnvironment(
-            'API_BASE_URL',
-            defaultValue: 'http://10.0.2.2:8080',
-          ),
-      storage = storage ?? PrefsAuthStorage();
+      : baseUrl =
+            baseUrl ??
+            const String.fromEnvironment(
+              'API_BASE_URL',
+              defaultValue: 'http://10.0.2.2:8080',
+            ),
+        // Memory-only by default: sessions die with the process, so every
+        // cold start forces a fresh login (max-security mode).
+        storage = storage ?? MemoryAuthStorage();
 
   final String baseUrl;
   final AuthStorage storage;

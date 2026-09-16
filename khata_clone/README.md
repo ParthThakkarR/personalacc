@@ -62,12 +62,23 @@ khata_clone/
 
 ## Install the mobile app (APK — no build needed)
 
-Ready file: **`D:\khatabook\khata-clone-v1.1.0-password-lan.apk`** (53 MB, signed,
-password login, API = `http://10.26.60.8:8080` — rebuild if the PC's Wi-Fi IP changes).
+Ready file: **`D:\khatabook\khata-clone-v1.3.0-vault-login-lan.apk`** (53 MB, signed,
+API = `http://10.26.60.8:8080` — rebuild if the PC's Wi-Fi IP changes).
+
+> **Stealth mode:** the app installs as **"Calculator"** (calculator icon) and
+> opens as a fully working calculator. Type the vault code **`639811`** and
+> press `=` to unlock the real ledger app. A wrong code just computes a
+> number — nothing is revealed. Lock again by logging out (More → Logout).
+>
+> **Login every time (max-security mode):** sessions live in RAM only — nothing
+> secret is stored on the phone. Kill/close the app and the next launch needs
+> vault code → phone/password → PIN again, always.
 
 > LAN testing only (laptop must run the backend, same Wi-Fi). For anywhere-sync
 > without the laptop, follow `docs/05-selfhost-deploy.md` (Oracle free VM) and
-> rebuild once with `--dart-define=API_BASE_URL=https://<your-domain>`.
+> rebuild once with `--dart-define=API_BASE_URL=https://<your-domain>`
+> **plus your own `--dart-define=VAULT_CODE=<secret>`** (release builds with
+> no code can never unlock — fail closed).
 
 1. On this PC: `cd D:\khatabook\khata_clone\backend; npm install; npm start` (keep it running).
 2. Phone on the **same Wi-Fi** as this PC → copy the APK over (WhatsApp/Drive/USB) → tap → Allow install → Install.
@@ -117,10 +128,26 @@ Full gate in one shot: `powershell -ExecutionPolicy Bypass -File scripts\ci.ps1`
 ## Production hardening checklist (for viva)
 
 - [x] Rate limits, helmet, zod validation, prod JWT-secret guard
+- [x] Closed vault: `ALLOWED_PHONES` allow-list — only admin-added numbers can
+  register/log in (outsiders get `403 not_invited` / generic `401`); production
+  **refuses to start** without the list, without strong JWT+CIPHER secrets, or
+  with the demo seed on (`SEED_DEMO` must be `"0"`)
+- [x] Stealth app front: installs as "Calculator", working calculator UI,
+  build-time `VAULT_CODE` unlock, auto re-lock on logout/session expiry
 - [ ] Real OTP provider (Firebase/Truecaller) + Play Integrity; `ALLOW_DEMO_OTP=0`
 - [ ] `flutter_secure_storage` + biometric (`local_auth`) for AppLock parity
 - [ ] Offline write queue + `sync_seq` (BookVsServerSeq equivalent) for 10k+ txns
 - [ ] Bluetooth thermal printing (receipt HTML already thermal-ready)
+
+### Going public (Render/VPS) — admin steps
+1. Deploy backend, then set env in the dashboard: strong `JWT_SECRET` +
+   `CIPHER_KEY` (≥32 chars each, distinct), `SEED_DEMO=0`, and `ALLOWED_PHONES`
+   with the 10 trusted numbers. The server won't start until all are set.
+2. Rebuild the APK with your own secret code + server URL:
+   `flutter build apk --release --dart-define=API_BASE_URL=https://<host> --dart-define=VAULT_CODE=<4–12 digits>`
+3. Tell the 10 users their login + the vault code **out of band** (never in the
+   same chat as the APK). Staff phones must be in `ALLOWED_PHONES` too, or
+   their invites can't be claimed.
 
 ## Disclaimer
 
