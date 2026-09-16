@@ -1,0 +1,524 @@
+{
+  "units": [
+    {
+      "id": "PCS",
+      "unitName": "Pieces",
+      "symbol": "PCS",
+      "priority": 1
+    },
+    {
+      "id": "NOS",
+      "unitName": "Numbers",
+      "symbol": "NOS",
+      "priority": 2
+    },
+    {
+      "id": "KGS",
+      "unitName": "Kilograms",
+      "symbol": "KGS",
+      "priority": 3,
+      "secondaryUnitId": "GMS",
+      "conversionFactor": 1000
+    },
+    {
+      "id": "BAG",
+      "unitName": "Bags",
+      "symbol": "BAG",
+      "priority": 4
+    },
+    {
+      "id": "BAL",
+      "unitName": "Bale",
+      "symbol": "BAL",
+      "priority": 4
+    },
+    {
+      "id": "BOU",
+      "unitName": "Billion of Units",
+      "symbol": "BOU",
+      "priority": 4
+    },
+    {
+      "id": "BTL",
+      "unitName": "Bottles",
+      "symbol": "BTL",
+      "priority": 4
+    },
+    {
+      "id": "BOX",
+      "unitName": "Box",
+      "symbol": "BOX",
+      "priority": 4
+    },
+    {
+      "id": "BKL",
+      "unitName": "Buckles",
+      "symbol": "BKL",
+      "priority": 4
+    },
+    {
+      "id": "BUN",
+      "unitName": "Bunches",
+      "symbol": "BUN",
+      "priority": 4
+    },
+    {
+      "id": "BDL",
+      "unitName": "Bundles",
+      "symbol": "BDL",
+      "priority": 4
+    },
+    {
+      "id": "CAN",
+      "unitName": "Cans",
+      "symbol": "CAN",
+      "priority": 4
+    },
+    {
+      "id": "CTN",
+      "unitName": "Cartons",
+      "symbol": "CTN",
+      "priority": 4
+    },
+    {
+      "id": "CMS",
+      "unitName": "Centimeters",
+      "symbol": "CMS",
+      "priority": 4
+    },
+    {
+      "id": "CCM",
+      "unitName": "Cubic Centimeters",
+      "symbol": "CCM",
+      "priority": 4
+    },
+    {
+      "id": "CBM",
+      "unitName": "Cubic Meters",
+      "symbol": "CBM",
+      "priority": 4
+    },
+    {
+      "id": "DOZ",
+      "unitName": "Dozens",
+      "symbol": "DOZ",
+      "priority": 4
+    },
+    {
+      "id": "DRM",
+      "unitName": "Drums",
+      "symbol": "DRM",
+      "priority": 4
+    },
+    {
+      "id": "GMS",
+      "unitName": "Grams",
+      "symbol": "GMS",
+      "priority": 4
+    },
+    {
+      "id": "GGK",
+      "unitName": "Great Gross",
+      "symbol": "GGK",
+      "priority": 4
+    },
+    {
+      "id": "GRS",
+      "unitName": "Gross",
+      "symbol": "GRS",
+      "priority": 4
+    },
+    {
+      "id": "GYD",
+      "unitName": "Gross Yards",
+      "symbol": "GYD",
+      "priority": 4
+    },
+    {
+      "id": "KLR",
+      "unitName": "Kilolitre",
+      "symbol": "KLR",
+      "priority": 4,
+      "secondaryUnitId": "LTR",
+      "conversionFactor": 1000
+    },
+    {
+      "id": "KME",
+      "unitName": "Kilometre",
+      "symbol": "KME",
+      "priority": 4,
+      "secondaryUnitId": "MTR",
+      "conversionFactor": 1000
+    },
+    {
+      "id": "LTR",
+      "unitName": "Litre",
+      "symbol": "LTR",
+      "priority": 4
+    },
+    {
+      "id": "MTR",
+      "unitName": "Meters",
+      "symbol": "MTR",
+      "priority": 4,
+      "secondaryUnitId": "CMS",
+      "conversionFactor": 100
+    },
+    {
+      "id": "MTS",
+      "unitName": "Metric Ton",
+      "symbol": "MTS",
+      "priority": 4,
+      "secondaryUnitId": "KGS",
+      "conversionFactor": 1000
+    },
+    {
+      "id": "MLT",
+      "unitName": "Mililitre",
+      "symbol": "MLT",
+      "priority": 4
+    },
+    {
+      "id": "PAC",
+      "unitName": "Packs",
+      "symbol": "PAC",
+      "priority": 4
+    },
+    {
+      "id": "PRS",
+      "unitName": "Pairs",
+      "symbol": "PRS",
+      "priority": 4
+    },
+    {
+      "id": "QTL",
+      "unitName": "Quintal",
+      "symbol": "QTL",
+      "priority": 4
+    },
+    {
+      "id": "ROL",
+      "unitName": "Rolls",
+      "symbol": "ROL",
+      "priority": 4
+    },
+    {
+      "id": "SET",
+      "unitName": "Sets",
+      "symbol": "SET",
+      "priority": 4
+    },
+    {
+      "id": "SQF",
+      "unitName": "Square Feet",
+      "symbol": "SQF",
+      "priority": 4
+    },
+    {
+      "id": "SQM",
+      "unitName": "Square Yards",
+      "symbol": "SQM",
+      "priority": 4
+    },
+    {
+      "id": "TBS",
+      "unitName": "Tablets",
+      "symbol": "TBS",
+      "priority": 4
+    },
+    {
+      "id": "TGM",
+      "unitName": "Ten Gross",
+      "symbol": "TGM",
+      "priority": 4
+    },
+    {
+      "id": "THD",
+      "unitName": "Thousands",
+      "symbol": "THD",
+      "priority": 4
+    },
+    {
+      "id": "TON",
+      "unitName": "Tonnes",
+      "symbol": "TON",
+      "priority": 4
+    },
+    {
+      "id": "TUB",
+      "unitName": "Tubes",
+      "symbol": "TUB",
+      "priority": 4
+    },
+    {
+      "id": "UNT",
+      "unitName": "Units",
+      "symbol": "UNT",
+      "priority": 4
+    },
+    {
+      "id": "UGS",
+      "unitName": "US gallons",
+      "symbol": "UGS",
+      "priority": 4
+    },
+    {
+      "id": "YDS",
+      "unitName": "Yards",
+      "symbol": "YDS",
+      "priority": 4
+    },
+    {
+      "id": "HRS",
+      "unitName": "Hours",
+      "symbol": "HRS",
+      "priority": 4
+    },
+    {
+      "id": "DAY",
+      "unitName": "Days",
+      "symbol": "DAY",
+      "priority": 4
+    },
+    {
+      "id": "WKS",
+      "unitName": "Weeks",
+      "symbol": "WKS",
+      "priority": 4
+    },
+    {
+      "id": "MON",
+      "unitName": "Months",
+      "symbol": "MON",
+      "priority": 4
+    },
+    {
+      "id": "YRS",
+      "unitName": "Years",
+      "symbol": "YRS",
+      "priority": 4
+    },
+    {
+      "id": "PET",
+      "unitName": "Peti",
+      "symbol": "PET",
+      "priority": 4
+    },
+    {
+      "id": "JAR",
+      "unitName": "Jars",
+      "symbol": "JAR",
+      "priority": 4
+    },
+    {
+      "id": "POCH",
+      "unitName": "Pouch",
+      "symbol": "POCH",
+      "priority": 4
+    },
+    {
+      "id": "BOR",
+      "unitName": "Bora",
+      "symbol": "BOR",
+      "priority": 4
+    },
+    {
+      "id": "COIL",
+      "unitName": "Coil",
+      "symbol": "COIL",
+      "priority": 4
+    },
+    {
+      "id": "FT",
+      "unitName": "Feet",
+      "symbol": "FT",
+      "priority": 4
+    },
+    {
+      "id": "IN",
+      "unitName": "Inches",
+      "symbol": "IN",
+      "priority": 4
+    },
+    {
+      "id": "PRT",
+      "unitName": "Portion",
+      "symbol": "PRT",
+      "priority": 4
+    },
+    {
+      "id": "CASE",
+      "unitName": "CASE",
+      "symbol": "CASE",
+      "priority": 4
+    },
+    {
+      "id": "CPS",
+      "unitName": "Capsules",
+      "symbol": "CPS",
+      "priority": 4
+    },
+    {
+      "id": "SQMT",
+      "unitName": "Square Meters",
+      "symbol": "SQMT",
+      "priority": 4
+    },
+    {
+      "id": "HRS",
+      "unitName": "Hours",
+      "symbol": "HRS",
+      "priority": 4
+    },
+    {
+      "id": "MINS",
+      "unitName": "Minutes",
+      "symbol": "MINS",
+      "priority": 4
+    },
+    {
+      "id": "MLG",
+      "unitName": "Milligram",
+      "symbol": "MLG",
+      "priority": 4
+    },
+    {
+      "id": "BCK",
+      "unitName": "Buckets",
+      "symbol": "BCK",
+      "priority": 4
+    },
+    {
+      "id": "GLS",
+      "unitName": "Glasses",
+      "symbol": "GLS",
+      "priority": 4
+    },
+    {
+      "id": "PLT",
+      "unitName": "Plates",
+      "symbol": "PLT",
+      "priority": 4
+    },
+    {
+      "id": "CTS",
+      "unitName": "Carats",
+      "symbol": "CTS",
+      "priority": 4
+    },
+    {
+      "id": "STRP",
+      "unitName": "Strips",
+      "symbol": "STRP",
+      "priority": 4
+    },
+    {
+      "id": "CUFT",
+      "unitName": "Cubic Feet",
+      "symbol": "CUFT",
+      "priority": 4
+    },
+    {
+      "id": "RMT",
+      "unitName": "Running Meter",
+      "symbol": "RMT",
+      "priority": 4
+    },
+    {
+      "id": "TRY",
+      "unitName": "Trays",
+      "symbol": "TRY",
+      "priority": 4
+    },
+    {
+      "id": "AMP",
+      "unitName": "Ampoule",
+      "symbol": "AMP",
+      "priority": 4
+    },
+    {
+      "id": "MAN-DAY",
+      "unitName": "Man Days",
+      "symbol": "MAN-DAY",
+      "priority": 4
+    },
+    {
+      "id": "NIGHT",
+      "unitName": "Nights",
+      "symbol": "NIGHT",
+      "priority": 4
+    },
+    {
+      "id": "DAY",
+      "unitName": "Days",
+      "symbol": "DAY",
+      "priority": 4
+    },
+    {
+      "id": "SQIN",
+      "unitName": "Square Inches",
+      "symbol": "SQIN",
+      "priority": 4
+    },
+    {
+      "id": "SAC",
+      "unitName": "Sachet",
+      "symbol": "SAC",
+      "priority": 4
+    },
+    {
+      "id": "TKT",
+      "unitName": "Ticket",
+      "symbol": "TKT",
+      "priority": 4
+    },
+    {
+      "id": "KW",
+      "unitName": "Kilowatt",
+      "symbol": "KW",
+      "priority": 4
+    },
+    {
+      "id": "W",
+      "unitName": "Watt",
+      "symbol": "W",
+      "priority": 4
+    },
+    {
+      "id": "PKT",
+      "unitName": "Packets",
+      "symbol": "PKT",
+      "priority": 4
+    },
+    {
+      "id": "MM",
+      "unitName": "Millimeter",
+      "symbol": "MM",
+      "priority": 4
+    },
+    {
+      "id": "SQCM",
+      "unitName": "Square Centimeters",
+      "symbol": "SQCM",
+      "priority": 4
+    },
+    {
+      "id": "LENG",
+      "unitName": "Length",
+      "symbol": "LENG",
+      "priority": 4
+    },
+    {
+      "id": "QTY",
+      "unitName": "Quantity",
+      "symbol": "QTY",
+      "priority": 4
+    },
+    {
+      "id": "OTH",
+      "unitName": "Others",
+      "symbol": "OTH",
+      "priority": 5
+    }
+  ]
+}

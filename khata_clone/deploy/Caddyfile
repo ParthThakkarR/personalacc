@@ -1,0 +1,7 @@
+# Replace __DOMAIN__ with your hostname, e.g. mykhata.duckdns.org
+# (setup-oracle.sh does this automatically). Caddy fetches a free
+# Let's Encrypt certificate and forces HTTPS. The Node backend listens
+# on 127.0.0.1:8080 only — it is never exposed to the internet directly.
+__DOMAIN__ {
+    reverse_proxy 127.0.0.1:8080
+}

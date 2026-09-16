@@ -1,0 +1,35 @@
+# ---- Build / runtime artifacts ----
+*.apk
+*.aab
+*.zip
+AF3D*
+
+# ---- Node backend ----
+**/node_modules/
+*.log
+npm-debug.log*
+khata_clone/backend/.env
+khata_clone/backend/data/*.db
+khata_clone/backend/data/*.db-*
+
+# ---- Flutter app (keep app/.gitignore too) ----
+khata_clone/app/build/
+khata_clone/app/.dart_tool/
+khata_clone/app/.flutter-plugins
+khata_clone/app/.flutter-plugins-dependencies
+khata_clone/app/.packages
+khata_clone/app/.flutter_build/
+khata_clone/app/android/.gradle/
+khata_clone/app/android/local.properties
+khata_clone/app/android/app/.cxx/
+khata_clone/app/android/app/.externalNativeBuild/
+khata_clone/app/ios/Pods/
+khata_clone/app/ios/.symlinks/
+
+# ---- Editor / OS junk ----
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+Desktop.ini

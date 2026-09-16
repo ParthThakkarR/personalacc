@@ -1,0 +1,77 @@
+{
+  "gstSlabs": [
+    {
+      "tax_exempted": true
+    },
+    {
+      "cgst": 0,
+      "sgst": 0,
+      "igst": 0,
+      "utgst": 0,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 0.05,
+      "sgst": 0.05,
+      "igst": 0.1,
+      "utgst": 0.05,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 0.125,
+      "sgst": 0.125,
+      "igst": 0.25,
+      "utgst": 0.125,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 1.5,
+      "sgst": 1.5,
+      "igst": 3,
+      "utgst": 1.5,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 2.5,
+      "sgst": 2.5,
+      "igst": 5,
+      "utgst": 2.5,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 3,
+      "sgst": 3,
+      "igst": 6,
+      "utgst": 3,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 3.75,
+      "sgst": 3.75,
+      "igst": 7.5,
+      "utgst": 3.75,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 6,
+      "sgst": 6,
+      "igst": 12,
+      "utgst": 6,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 9,
+      "sgst": 9,
+      "igst": 18,
+      "utgst": 9,
+      "tax_exempted": false
+    },
+    {
+      "cgst": 14,
+      "sgst": 14,
+      "igst": 28,
+      "utgst": 14,
+      "tax_exempted": false
+    }
+  ]
+}

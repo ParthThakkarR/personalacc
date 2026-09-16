@@ -1,0 +1,29 @@
+# Render Blueprint — deploy: New+ / Blueprint or Web Service, connect repo,
+# pick the `render-deploy` branch. Free plan is fine for testing.
+# NOTE: SQLite lives on the service's ephemeral disk — data resets on a
+# redeploy. This is the TEST host; durable self-hosting is `docs/05` §10.
+services:
+  - type: web
+    name: khata-backend
+    runtime: node
+    plan: free
+    region: singapore
+    rootDir: khata_clone/backend
+    healthCheckPath: /health
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SEED_DEMO
+        value: "0"
+      - key: AUTH_MODE
+        value: password
+      - key: ALLOWED_ORIGINS
+        value: ""
+      - key: DB_PATH
+        value: ./data/khata.db
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CIPHER_KEY
+        generateValue: true

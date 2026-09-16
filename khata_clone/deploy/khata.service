@@ -1,0 +1,21 @@
+# systemd unit for the Khata Clone backend.
+# Install: sudo cp khata.service /etc/systemd/system/khata.service
+# (setup-oracle.sh does this automatically, fixing the paths/owner below)
+[Unit]
+Description=Khata Clone backend (Node + SQLite)
+After=network.target
+
+[Service]
+Type=simple
+User=__APP_USER__
+WorkingDirectory=__APP_DIR__
+ExecStart=/usr/bin/node src/index.js
+Restart=always
+RestartSec=5
+EnvironmentFile=__APP_DIR__/.env
+# Hardening: no new privileges, private /tmp
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
